@@ -77,13 +77,6 @@ export const CustomOrders = () => {
       className="py-20 px-4 relative overflow-hidden"
       style={{ backgroundColor: '#F5F1E8' }}
     >
-      <div
-        className="absolute bottom-10 right-10 w-56 h-56 opacity-20"
-        style={{
-          backgroundImage: 'url(https://images.pexels.com/photos/1072179/pexels-photo-1072179.jpeg?auto=compress&cs=tinysrgb&w=400)',
-          backgroundSize: 'cover',
-        }}
-      ></div>
 
       <div
         ref={elementRef}
