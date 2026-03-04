@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { X, Trash2, Plus, Minus, MessageCircle, Mail, ShoppingBag, ArrowRight } from 'lucide-react';
+import { X, Trash2, Plus, Minus, MessageCircle, Mail, ShoppingBag, ArrowRight, CheckCircle } from 'lucide-react';
 import { Cart as CartType } from '../types';
 
 interface CartProps {
@@ -25,9 +25,12 @@ export const Cart = ({
 }: CartProps) => {
   const [showAnimation, setShowAnimation] = useState(false);
   const [showContactForm, setShowContactForm] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [customerName, setCustomerName] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
   const [customerWhatsApp, setCustomerWhatsApp] = useState('');
   const [contactMethod, setContactMethod] = useState<'whatsapp' | 'email' | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -48,9 +51,9 @@ export const Cart = ({
     setShowContactForm(true);
   };
 
-  const handleSendRequest = () => {
-    if (!customerEmail || !customerWhatsApp) {
-      alert('Por favor ingresa tu correo y WhatsApp para continuar');
+  const handleSendRequest = async () => {
+    if (!customerName || !customerEmail || !customerWhatsApp) {
+      alert('Por favor ingresa tu nombre, correo y WhatsApp para continuar');
       return;
     }
 
@@ -59,19 +62,64 @@ export const Cart = ({
       .join(contactMethod === 'email' ? '%0D%0A' : '\n');
 
     if (contactMethod === 'whatsapp') {
-      const message = `Hola, estoy interesado en obtener información y precios para los siguientes productos:\n\n${items}\n\nMis datos de contacto:\nCorreo: ${customerEmail}\nWhatsApp: ${customerWhatsApp}\n\nPor favor, envíenme más información sobre precios y disponibilidad.`;
+      const message = `Hola, soy ${customerName}. Estoy interesado en obtener información y precios para los siguientes productos:\n\n${items}\n\nMis datos de contacto:\nNombre: ${customerName}\nCorreo: ${customerEmail}\nWhatsApp: ${customerWhatsApp}\n\nPor favor, envíenme más información sobre precios y disponibilidad.`;
       window.open(`https://wa.me/18492491951?text=${encodeURIComponent(message)}`, '_blank');
+      setShowContactForm(false);
+      setShowSuccessMessage(true);
+      setTimeout(() => {
+        setCustomerName('');
+        setCustomerEmail('');
+        setCustomerWhatsApp('');
+        setContactMethod(null);
+        setShowSuccessMessage(false);
+        onClose();
+      }, 3500);
     } else if (contactMethod === 'email') {
-      const subject = 'Solicitud de información - Productos ECOFEST';
-      const body = `Hola,%0D%0A%0D%0AEstoy interesado en obtener información y precios para los siguientes productos:%0D%0A%0D%0A${items}%0D%0A%0D%0AMis datos de contacto:%0D%0ACorreo: ${customerEmail}%0D%0AWhatsApp: ${customerWhatsApp}%0D%0A%0D%0APor favor, envíenme más información sobre precios y disponibilidad.%0D%0A%0D%0AGracias.`;
-      window.location.href = `mailto:ecofestdom@gmail.com,semillerodarlyn@gmail.com?subject=${subject}&body=${body}`;
-    }
+      setLoading(true);
+      try {
+        const itemsList = cart.items
+          .map((item) => `${item.product.name} - Cantidad: ${item.quantity}`)
+          .join('\n');
 
-    setShowContactForm(false);
-    setCustomerEmail('');
-    setCustomerWhatsApp('');
-    setContactMethod(null);
-    onClose();
+        const response = await fetch('https://formsubmit.co/ajax/semillerodarlyn@gmail.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: customerName,
+            email: customerEmail,
+            phone: customerWhatsApp,
+            subject: `Consulta de Carrito - ${customerName}`,
+            message: `Solicitud de información sobre productos\n\nProductos:\n${itemsList}\n\nDatos del cliente:\nNombre: ${customerName}\nCorreo: ${customerEmail}\nTeléfono: ${customerWhatsApp}`,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Error al enviar el correo');
+        }
+
+        // Mostrar mensaje de éxito
+        setShowContactForm(false);
+        setShowSuccessMessage(true);
+        setLoading(false);
+
+        // Esperar 3 segundos y luego cerrar
+        setTimeout(() => {
+          setCustomerName('');
+          setCustomerEmail('');
+          setCustomerWhatsApp('');
+          setContactMethod(null);
+          setShowSuccessMessage(false);
+          onClose();
+        }, 3500);
+      } catch (error) {
+        console.error('Error al enviar correo:', error);
+        setLoading(false);
+        setShowContactForm(false);
+        alert('Hubo un error al enviar el correo. Por favor intenta de nuevo.');
+      }
+    }
   };
 
   if (!isOpen) return null;
@@ -110,7 +158,20 @@ export const Cart = ({
         </div>
 
         <div className="p-6">
-          {cart.items.length === 0 ? (
+          {showSuccessMessage ? (
+            <div className="text-center py-12">
+              <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-green-800 mb-4">
+                ¡Gracias por elegirnos!
+              </h3>
+              <p className="text-gray-600 text-lg">
+                Estaremos en contacto con usted muy pronto.
+              </p>
+              <p className="text-gray-500 text-sm mt-4">
+                Revisa tu correo electrónico para más información.
+              </p>
+            </div>
+          ) : cart.items.length === 0 ? (
             <div className="text-center py-12">
               <ShoppingBag className="w-16 h-16 text-gray-300 mx-auto mb-4" />
               <p className="text-gray-600 text-lg mb-2">Tu carrito está vacío</p>
@@ -130,17 +191,14 @@ export const Cart = ({
                       <img
                         src={item.product.image}
                         alt={item.product.name}
-                        className="w-20 h-20 object-cover rounded-lg"
+                        className="w-20 h-20 object-contain rounded-lg"
                       />
                       <div className="flex-1">
                         <h3 className="font-bold text-gray-800 mb-1">
                           {item.product.name}
                         </h3>
-                        <p className="text-xs text-gray-600 mb-2">
+                        <p className="text-xs text-gray-600">
                           {item.product.category}
-                        </p>
-                        <p className="text-sm text-green-700 font-semibold">
-                          {item.product.pricing.unitPrice.split(' ')[0]}
                         </p>
                       </div>
                     </div>
@@ -215,7 +273,20 @@ export const Cart = ({
                     <div className="space-y-4">
                       <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-2">
-                          Tu correo electrónico
+                          Tu nombre *
+                        </label>
+                        <input
+                          type="text"
+                          value={customerName}
+                          onChange={(e) => setCustomerName(e.target.value)}
+                          placeholder="John Doe"
+                          className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          Tu correo electrónico *
                         </label>
                         <input
                           type="email"
@@ -228,7 +299,7 @@ export const Cart = ({
 
                       <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-2">
-                          Tu número de WhatsApp
+                          Tu número de WhatsApp *
                         </label>
                         <input
                           type="tel"
@@ -244,7 +315,8 @@ export const Cart = ({
                   <div className="space-y-3">
                     <button
                       onClick={handleSendRequest}
-                      className="w-full bg-green-600 text-white py-4 rounded-xl font-bold hover:bg-green-700 transition-all transform hover:scale-[1.02] shadow-lg flex items-center justify-center gap-2"
+                      disabled={loading}
+                      className={`w-full ${loading ? 'bg-gray-400' : 'bg-green-600 hover:bg-green-700'} text-white py-4 rounded-xl font-bold transition-all transform hover:scale-[1.02] shadow-lg flex items-center justify-center gap-2`}
                     >
                       {contactMethod === 'whatsapp' ? (
                         <>
@@ -254,7 +326,7 @@ export const Cart = ({
                       ) : (
                         <>
                           <Mail className="w-5 h-5" />
-                          Enviar por Correo
+                          {loading ? 'Enviando...' : 'Enviar por Correo'}
                         </>
                       )}
                     </button>
@@ -269,10 +341,18 @@ export const Cart = ({
                 </div>
               )}
 
-              <div className="mt-6 bg-green-50 rounded-xl p-4">
+              <div className="mt-6 bg-green-50 rounded-xl p-4 space-y-3">
                 <p className="text-xs text-gray-600 text-center leading-relaxed">
                   Ingresa tus datos de contacto para recibir información detallada sobre precios y disponibilidad.
                 </p>
+                <div className="border-t border-green-200 pt-4">
+                  <p className="text-sm font-semibold text-green-800 text-center mb-2">
+                    ¡Gracias por elegirnos!
+                  </p>
+                  <p className="text-xs text-gray-600 text-center leading-relaxed">
+                    Estaremos en contacto con usted muy pronto con información sobre precios y disponibilidad.
+                  </p>
+                </div>
               </div>
             </>
           )}

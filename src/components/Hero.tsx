@@ -15,7 +15,7 @@ export const Hero = () => {
           backgroundRepeat: 'no-repeat',
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-green-50/50 to-white/60"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-green-50/20 to-white/30"></div>
       </div>
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 text-center">

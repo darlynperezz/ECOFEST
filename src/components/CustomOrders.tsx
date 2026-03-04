@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
-import { Sparkles, Send, CheckCircle } from 'lucide-react';
+import { Sparkles, Mail, CheckCircle } from 'lucide-react';
 
 export const CustomOrders = () => {
   const { elementRef, isVisible } = useScrollAnimation();
@@ -15,50 +15,89 @@ export const CustomOrders = () => {
   });
 
   const [submitted, setSubmitted] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    try {
-      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-order-email`;
+    // Validar que todos los campos estén llenos
+    if (
+      !formData.company ||
+      !formData.name ||
+      !formData.email ||
+      !formData.phone ||
+      !formData.productType ||
+      !formData.quantity ||
+      !formData.details
+    ) {
+      alert('Por favor completa todos los campos');
+      return;
+    }
 
-      const response = await fetch(apiUrl, {
+    setLoading(true);
+
+    try {
+      // Crear el cuerpo del correo
+      const emailBody = `
+Solicitud de Pedido Personalizado - ECOFEST DOM
+
+================== DATOS DEL CLIENTE ==================
+Nombre: ${formData.name}
+Empresa: ${formData.company}
+Email del Cliente: ${formData.email}
+Teléfono: ${formData.phone}
+
+================== DETALLES DEL PEDIDO ==================
+Tipo de Producto: ${formData.productType}
+Cantidad Estimada: ${formData.quantity}
+
+================== ESPECIFICACIONES Y DETALLES ==================
+${formData.details}
+
+================== FIN DEL CORREO ==================
+Este correo fue enviado desde el formulario de Pedidos Personalizados
+      `.trim();
+
+      // Enviar el correo usando FormSubmit
+      const response = await fetch('https://formsubmit.co/ajax/semillerodarlyn@gmail.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          customerName: formData.name,
-          customerEmail: formData.email,
-          customerPhone: formData.phone,
-          companyName: formData.company,
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          company: formData.company,
           productType: formData.productType,
-          quantity: parseInt(formData.quantity) || 0,
-          customizations: formData.details,
+          quantity: formData.quantity,
+          details: formData.details,
+          _subject: `Nueva Solicitud de Pedido - ${formData.name}`,
         }),
       });
 
-      if (response.ok) {
-        setSubmitted(true);
-        setTimeout(() => {
-          setFormData({
-            company: '',
-            name: '',
-            email: '',
-            phone: '',
-            productType: '',
-            quantity: '',
-            details: '',
-          });
-          setSubmitted(false);
-        }, 3000);
-      } else {
-        console.error('Error al enviar solicitud');
-        alert('Hubo un error al enviar la solicitud. Por favor intenta de nuevo.');
+      if (!response.ok) {
+        throw new Error('Error al enviar el correo');
       }
+
+      // Mostrar mensaje de éxito
+      setSubmitted(true);
+      setTimeout(() => {
+        setFormData({
+          company: '',
+          name: '',
+          email: '',
+          phone: '',
+          productType: '',
+          quantity: '',
+          details: '',
+        });
+        setSubmitted(false);
+      }, 4000);
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error al enviar solicitud:', error);
       alert('Hubo un error al enviar la solicitud. Por favor intenta de nuevo.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -101,11 +140,14 @@ export const CustomOrders = () => {
         {submitted ? (
           <div className="bg-white rounded-2xl p-12 shadow-2xl text-center">
             <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
-            <h3 className="text-2xl font-bold text-green-800 mb-2">
-              ¡Solicitud Enviada!
+            <h3 className="text-2xl font-bold text-green-800 mb-4">
+              ¡Gracias por elegirnos!
             </h3>
-            <p className="text-gray-600">
-              Nos pondremos en contacto contigo pronto.
+            <p className="text-gray-600 text-lg">
+              Estaremos en contacto con usted muy pronto.
+            </p>
+            <p className="text-gray-500 text-sm mt-4">
+              Revisa tu correo electrónico para más información sobre tu pedido.
             </p>
           </div>
         ) : (
@@ -224,10 +266,11 @@ export const CustomOrders = () => {
 
             <button
               type="submit"
-              className="w-full bg-green-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-green-700 transition-all transform hover:scale-[1.02] shadow-lg flex items-center justify-center gap-2"
+              disabled={loading}
+              className={`w-full ${loading ? 'bg-gray-400' : 'bg-green-600 hover:bg-green-700'} text-white py-4 rounded-xl font-bold text-lg transition-all transform hover:scale-[1.02] shadow-lg flex items-center justify-center gap-2`}
             >
-              <Send className="w-5 h-5" />
-              Enviar Solicitud
+              <Mail className="w-5 h-5" />
+              {loading ? 'Enviando...' : 'Enviar Solicitud por Correo'}
             </button>
 
             <p className="text-sm text-gray-600 text-center mt-4">

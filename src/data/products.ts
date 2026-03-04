@@ -5,7 +5,7 @@ export const products: Product[] = [
     id: 'birch-1',
     name: 'Cucharas de Birchwood',
     category: 'Birchwood',
-    image: 'https://images.pexels.com/photos/7195122/pexels-photo-7195122.jpeg?auto=compress&cs=tinysrgb&w=800',
+    image: '/CUCHARA.png',
     shortDescription: 'Cucharas ecológicas de madera de abedul natural',
     fullDescription: 'La cuchara está hecha de madera de BIRCHWOOD, un material natural reconocido por su durabilidad. Sustituye los plásticos de un solo uso y cuida el medio ambiente.',
     specifications: {
@@ -24,7 +24,7 @@ export const products: Product[] = [
     id: 'birch-2',
     name: 'Tenedores de Birchwood',
     category: 'Birchwood',
-    image: 'https://images.pexels.com/photos/4207891/pexels-photo-4207891.jpeg?auto=compress&cs=tinysrgb&w=800',
+    image: '/CUBIERTOS.png',
     shortDescription: 'Tenedores resistentes de madera de abedul',
     fullDescription: 'El cubierto/BIRCHWOOD está hecho de madera de BIRCHWOOD, un material natural reconocido por su durabilidad. Sustituye los plásticos de un solo uso y cuida el medio ambiente.',
     specifications: {
@@ -43,7 +43,7 @@ export const products: Product[] = [
     id: 'birch-3',
     name: 'Cuchillos de Birchwood',
     category: 'Birchwood',
-    image: 'https://images.pexels.com/photos/4099354/pexels-photo-4099354.jpeg?auto=compress&cs=tinysrgb&w=800',
+    image: '/CUCHILLO.png',
     shortDescription: 'Cuchillos funcionales de madera natural',
     fullDescription: 'El cuchillo está hecho de madera de BIRCHWOOD, un material natural reconocido por su durabilidad. Sustituye los plásticos de un solo uso y cuida el medio ambiente.',
     specifications: {
@@ -62,7 +62,7 @@ export const products: Product[] = [
     id: 'sugarcane-1',
     name: 'Cajas de Alimentos de Caña de Azúcar',
     category: 'Caña de Azúcar',
-    image: 'https://images.pexels.com/photos/4393426/pexels-photo-4393426.jpeg?auto=compress&cs=tinysrgb&w=800',
+    image: '/CAJAS DE ALIMENTOS.png',
     shortDescription: 'Cajas para alimentos de bagazo de caña',
     fullDescription: 'Cajas para alimentos hechas de fibra de bagazo de caña de azúcar. Este material natural, resistente y duradero presenta un diseño práctico y seguro. Disponibles en 23x23 cm (9x9) con o sin separadores; 15x15cm (6x6) para sándwiches, postres y papas fritas.',
     specifications: {
@@ -82,7 +82,7 @@ export const products: Product[] = [
     id: 'palm-1',
     name: 'Platos de Hojas de Palma',
     category: 'Hojas de Palma',
-    image: 'https://images.pexels.com/photos/5718019/pexels-photo-5718019.jpeg?auto=compress&cs=tinysrgb&w=800',
+    image: '/PLATOS.png',
     shortDescription: 'Platos artesanales de hojas de palma caídas',
     fullDescription: 'Platos elaborados con hojas de palma de areca, un material 100% natural reconocido por su resistencia y durabilidad. Su diseño elegante realza la presentación de los alimentos. Disponibles en platos en forma de corazón, platos cuadrados, cuencos, bandejas ovaladas y platos grandes con 4 compartimentos.',
     specifications: {
@@ -101,7 +101,7 @@ export const products: Product[] = [
     id: 'biocup-1',
     name: 'Biocups de Papel',
     category: 'Biocups',
-    image: 'https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=800',
+    image: '/BIOCUPS.png',
     shortDescription: 'Vasos de papel ecológicos',
     fullDescription: 'Los vasos de papel en lugar de plástico: esto es lo que ayudará a la Madre Naturaleza. Disponibles en los siguientes tamaños para una variedad de usos, desde café y helado hasta bebidas y jugos: 150 ml, 250 ml y 350 ml con tapa con pajita.',
     specifications: {
@@ -121,7 +121,7 @@ export const products: Product[] = [
     id: 'biocup-2',
     name: 'Stir Stiks de Madera',
     category: 'Biocups',
-    image: 'https://images.pexels.com/photos/4195325/pexels-photo-4195325.jpeg?auto=compress&cs=tinysrgb&w=800',
+    image: '/STIR STIKS.png',
     shortDescription: 'Palillos para remover de madera',
     fullDescription: 'Los palillos para remover café y otras bebidas son de madera. Es un alivio reemplazar los de plástico. Los desechables de madera se pueden compostar rápidamente.',
     specifications: {
@@ -141,7 +141,7 @@ export const products: Product[] = [
     id: 'biocup-3',
     name: 'Helado Stiks',
     category: 'Biocups',
-    image: 'https://images.pexels.com/photos/4397838/pexels-photo-4397838.jpeg?auto=compress&cs=tinysrgb&w=800',
+    image: '/HELADO STIKS.png',
     shortDescription: 'Palitos para helado de madera',
     fullDescription: 'Los HELADO STIKS están elaborados en madera de birchwood, un material natural reconocido por su resistencia y durabilidad. Evoca lo tradicional, con un diseño sencillo y funcional que conecta con lo auténtico y natural.',
     specifications: {
@@ -160,7 +160,7 @@ export const products: Product[] = [
     id: 'birch-4',
     name: 'Sporkcutlery de Birchwood',
     category: 'Birchwood',
-    image: 'https://images.pexels.com/photos/4207893/pexels-photo-4207893.jpeg?auto=compress&cs=tinysrgb&w=800',
+    image: '/SPORKCUTLLERY.png',
     shortDescription: 'Cuchara y tenedor combinados',
     fullDescription: 'El sporkcutlery está hecho de madera de Birchwood, un material natural reconocido por su durabilidad. Cuchara y tenedor combinados, excelente para arroz.',
     specifications: {

@@ -44,6 +44,15 @@ Deno.serve(async (req: Request) => {
       ${orderData.additionalNotes ? `<p><strong>Notas Adicionales:</strong> ${orderData.additionalNotes}</p>` : ''}
     `;
 
+    const confirmationEmailContent = `
+      <h2>¡Gracias por tu solicitud!</h2>
+      <p>Hola ${orderData.customerName},</p>
+      <p>Hemos recibido tu solicitud de pedido personalizado para <strong>${orderData.productType}</strong>.</p>
+      <p>Nos pondremos en contacto contigo muy pronto sobre tu orden. Revisa tu correo electrónico para más información.</p>
+      <p>Si tienes cualquier pregunta, no dudes en contactarnos.</p>
+      <p><strong>EcoFest DOM</strong></p>
+    `;
+
     const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
 
     if (!RESEND_API_KEY) {
@@ -58,7 +67,7 @@ Deno.serve(async (req: Request) => {
       },
       body: JSON.stringify({
         from: 'EcoFest DOM <onboarding@resend.dev>',
-        to: ['ecofestdom@gmail.com'],
+        to: ['semillerodarlyn@gmail.com'],
         subject: `Nueva Solicitud de Pedido - ${orderData.customerName}`,
         html: emailContent,
         reply_to: orderData.customerEmail,
@@ -68,6 +77,26 @@ Deno.serve(async (req: Request) => {
     if (!res.ok) {
       const errorText = await res.text();
       throw new Error(`Error al enviar email: ${errorText}`);
+    }
+
+    // Enviar correo de confirmación al cliente
+    const confirmationRes = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${RESEND_API_KEY}`
+      },
+      body: JSON.stringify({
+        from: 'EcoFest DOM <onboarding@resend.dev>',
+        to: [orderData.customerEmail],
+        subject: 'Solicitud de Pedido Recibida - EcoFest DOM',
+        html: confirmationEmailContent,
+      }),
+    });
+
+    if (!confirmationRes.ok) {
+      const errorText = await confirmationRes.text();
+      throw new Error(`Error al enviar email de confirmación: ${errorText}`);
     }
 
     const data = await res.json();
