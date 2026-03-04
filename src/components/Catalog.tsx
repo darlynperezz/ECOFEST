@@ -24,13 +24,6 @@ export const Catalog = ({ onProductClick }: CatalogProps) => {
       className="py-20 px-4 relative overflow-hidden"
       style={{ backgroundColor: '#F5F1E8' }}
     >
-      <div
-        className="absolute bottom-10 left-10 w-48 h-48 opacity-20 transform rotate-45"
-        style={{
-          backgroundImage: 'url(https://images.pexels.com/photos/1072179/pexels-photo-1072179.jpeg?auto=compress&cs=tinysrgb&w=400)',
-          backgroundSize: 'cover',
-        }}
-      ></div>
 
       <div
         ref={elementRef}

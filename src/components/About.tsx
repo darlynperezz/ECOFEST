@@ -43,14 +43,6 @@ export const About = () => {
       className="py-20 px-4 relative overflow-hidden"
       style={{ backgroundColor: '#F2E8CF' }}
     >
-      <div
-        className="absolute top-20 right-20 w-72 h-72 opacity-5"
-        style={{
-          backgroundImage: 'url(https://images.pexels.com/photos/1072179/pexels-photo-1072179.jpeg?auto=compress&cs=tinysrgb&w=400)',
-          backgroundSize: 'cover',
-          borderRadius: '50%',
-        }}
-      ></div>
 
       <div
         ref={elementRef}
