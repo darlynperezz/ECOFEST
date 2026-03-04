@@ -1,17 +1,28 @@
 import { supabase } from './supabaseClient';
 import { User, Order, OrderItem } from '../types';
 
+// Supabase is optional - if not configured, DB features are disabled
+const checkSupabase = () => {
+  if (!supabase) {
+    console.warn('Supabase not configured. Database features are disabled.');
+    return false;
+  }
+  return true;
+};
+
 export const orderService = {
   async createOrUpdateUser(user: User): Promise<User | null> {
     try {
-      const { data: existingUser } = await supabase
+      if (!checkSupabase()) return user as User;
+      
+      const { data: existingUser } = await supabase!
         .from('users')
         .select('*')
         .eq('email', user.email)
         .maybeSingle();
 
       if (existingUser) {
-        const { data, error } = await supabase
+        const { data, error } = await supabase!
           .from('users')
           .update({
             full_name: user.full_name,
@@ -29,7 +40,7 @@ export const orderService = {
         if (error) throw error;
         return data;
       } else {
-        const { data, error } = await supabase
+        const { data, error } = await supabase!
           .from('users')
           .insert([
             {
@@ -62,10 +73,12 @@ export const orderService = {
     notes?: string
   ): Promise<Order | null> {
     try {
+      if (!checkSupabase()) return null;
+      
       const orderNumber = `ECO-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
       const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
 
-      const { data, error } = await supabase
+      const { data, error } = await supabase!
         .from('orders')
         .insert([
           {
@@ -92,7 +105,9 @@ export const orderService = {
 
   async getOrdersByUser(userId: string): Promise<Order[]> {
     try {
-      const { data, error } = await supabase
+      if (!checkSupabase()) return [];
+      
+      const { data, error } = await supabase!
         .from('orders')
         .select('*')
         .eq('user_id', userId)
@@ -108,7 +123,9 @@ export const orderService = {
 
   async getUserByEmail(email: string): Promise<User | null> {
     try {
-      const { data, error } = await supabase
+      if (!checkSupabase()) return null;
+      
+      const { data, error } = await supabase!
         .from('users')
         .select('*')
         .eq('email', email)
