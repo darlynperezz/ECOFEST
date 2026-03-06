@@ -3,7 +3,6 @@ import { BookOpen } from 'lucide-react';
 import { products } from '../data/products';
 import { Product } from '../types';
 import { ProductCard } from './ProductCard';
-import { CatalogPDFViewer } from './CatalogPDFViewer';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 interface CatalogProps {
@@ -12,7 +11,6 @@ interface CatalogProps {
 
 export const Catalog = ({ onProductClick }: CatalogProps) => {
   const [activeCategory, setActiveCategory] = useState<string>('Birchwood');
-  const [isPDFOpen, setIsPDFOpen] = useState(false);
   const { elementRef, isVisible } = useScrollAnimation();
 
   const categories = ['Birchwood', 'Caña de Azúcar', 'Hojas de Palma', 'Biocups'];
@@ -45,13 +43,15 @@ export const Catalog = ({ onProductClick }: CatalogProps) => {
         </div>
 
         <div className="flex flex-wrap justify-center gap-4 mb-12">
-          <button
-            onClick={() => setIsPDFOpen(true)}
+          <a
+            href="https://heyzine.com/flip-book/01638ac505.html"
+            target="_blank"
+            rel="noopener noreferrer"
             className="px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 bg-green-700 text-white shadow-xl flex items-center gap-2 hover:bg-green-800"
           >
             <BookOpen className="w-5 h-5" />
-            Ver Catálogo PDF
-          </button>
+            Ver Catálogo
+          </a>
 
           {categories.map((category) => (
             <button
@@ -92,8 +92,6 @@ export const Catalog = ({ onProductClick }: CatalogProps) => {
           </div>
         )}
       </div>
-
-      <CatalogPDFViewer isOpen={isPDFOpen} onClose={() => setIsPDFOpen(false)} />
     </section>
   );
 };

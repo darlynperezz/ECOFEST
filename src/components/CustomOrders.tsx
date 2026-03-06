@@ -58,7 +58,7 @@ Este correo fue enviado desde el formulario de Pedidos Personalizados
       `.trim();
 
       // Enviar el correo usando FormSubmit
-      const response = await fetch('https://formsubmit.co/ajax/semillerodarlyn@gmail.com', {
+      const response = await fetch('https://formsubmit.co/ajax/ecofestdom@gmail.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -63,7 +63,7 @@ export const Cart = ({
 
     if (contactMethod === 'whatsapp') {
       const message = `Hola, soy ${customerName}. Estoy interesado en obtener información y precios para los siguientes productos:\n\n${items}\n\nMis datos de contacto:\nNombre: ${customerName}\nCorreo: ${customerEmail}\nWhatsApp: ${customerWhatsApp}\n\nPor favor, envíenme más información sobre precios y disponibilidad.`;
-      window.open(`https://wa.me/18492491951?text=${encodeURIComponent(message)}`, '_blank');
+      window.open(`https://wa.me/8492641951?text=${encodeURIComponent(message)}`, '_blank');
       setShowContactForm(false);
       setShowSuccessMessage(true);
       setTimeout(() => {
@@ -81,7 +81,7 @@ export const Cart = ({
           .map((item) => `${item.product.name} - Cantidad: ${item.quantity}`)
           .join('\n');
 
-        const response = await fetch('https://formsubmit.co/ajax/semillerodarlyn@gmail.com', {
+        const response = await fetch('https://formsubmit.co/ajax/ecofestdom@gmail.com', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

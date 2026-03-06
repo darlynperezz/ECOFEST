@@ -2,9 +2,9 @@ import { Leaf, Mail, Phone, MapPin, Instagram, Facebook, Twitter } from 'lucide-
 
 export const Footer = () => {
   const socialLinks = [
-    { icon: Instagram, url: '#', label: 'Instagram' },
-    { icon: Facebook, url: '#', label: 'Facebook' },
-    { icon: Twitter, url: '#', label: 'Twitter/X' },
+    { icon: Instagram, url: 'https://instagram.com/ECOFESTDOM', label: 'Instagram' },
+    { icon: Facebook, url: 'https://facebook.com/ECOFESTDOM', label: 'Facebook' },
+    { icon: Twitter, url: 'https://wa.me/8492641951', label: 'WhatsApp' },
   ];
 
   const scrollToSection = (id: string) => {
@@ -77,7 +77,7 @@ export const Footer = () => {
               </li>
               <li className="flex items-center space-x-2">
                 <Phone className="w-5 h-5 text-green-300 flex-shrink-0" />
-                <span className="text-green-200 text-sm">+1 (849) 249-1951</span>
+                <a href="https://wa.me/8492641951" className="text-green-200 hover:text-white transition-colors text-sm">+1 (849) 264-1951</a>
               </li>
               <li className="flex items-center space-x-2">
                 <MapPin className="w-5 h-5 text-green-300 flex-shrink-0" />

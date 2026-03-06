@@ -26,10 +26,10 @@ export const products: Product[] = [
     category: 'Birchwood',
     image: '/CUBIERTOS.png',
     shortDescription: 'Tenedores resistentes de madera de abedul',
-    fullDescription: 'El cubierto/BIRCHWOOD está hecho de madera de BIRCHWOOD, un material natural reconocido por su durabilidad. Sustituye los plásticos de un solo uso y cuida el medio ambiente.',
+    fullDescription: 'El cubierto/BIRCHWOOD está hecho de madera de BIRCHWOOD, un material natural reconocido por su durabilidad. Sustituye los plásticos de un solo uso y cuida el medio ambiente. Otros tamaños disponibles a petición.',
     specifications: {
       material: 'Madera de abedul 100% natural',
-      size: '16 cm de largo',
+      size: '160 mm (16 cm)',
       use: 'Biodegradable, compostable',
     },
     pricing: {
@@ -67,7 +67,7 @@ export const products: Product[] = [
     fullDescription: 'Cajas para alimentos hechas de fibra de bagazo de caña de azúcar. Este material natural, resistente y duradero presenta un diseño práctico y seguro. Disponibles en 23x23 cm (9x9) con o sin separadores; 15x15cm (6x6) para sándwiches, postres y papas fritas.',
     specifications: {
       material: 'Bagazo de caña de azúcar',
-      size: 'Disponibles en 15x15cm y 23x23cm',
+      size: '23 x 23 cm (9" x 9") con o sin divisor',
       capacity: 'Hasta 500g de alimentos',
       use: 'Resistente a grasa y humedad',
     },
