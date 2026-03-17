@@ -94,9 +94,9 @@ export const ProductModal = ({ product, isOpen, onClose, onAddToCart }: ProductM
         <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
           <div className="relative h-96 md:h-full">
             <img
-              src={product.image}
+              src={product.modalImage || product.image}
               alt={product.name}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
             />
             <div className="absolute top-4 left-4 flex flex-col gap-2">
               {product.badges.map((badge, index) => (

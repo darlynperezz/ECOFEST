@@ -3,6 +3,7 @@ export interface Product {
   name: string;
   category: 'Birchwood' | 'Caña de Azúcar' | 'Hojas de Palma' | 'Biocups';
   image: string;
+  modalImage?: string;
   shortDescription: string;
   fullDescription: string;
   specifications: {

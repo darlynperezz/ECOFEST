@@ -23,11 +23,11 @@ export const Hero = () => {
           <Leaf className="w-16 h-16 text-green-300" />
         </div>
 
-        <h1 className="text-5xl md:text-7xl font-bold text-green-900 mb-6 leading-tight">
+        <h1 className="text-5xl md:text-7xl font-bold text-green-900 mb-6 leading-tight" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
           Desechables Naturales que protegen la Madre Tierra
         </h1>
 
-        <p className="text-xl md:text-2xl text-green-800 mb-8 font-light">
+        <p className="text-xl md:text-2xl text-green-800 mb-8 font-light" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.5)' }}>
           Artículos estándar y pedidos personalizados
         </p>
 
