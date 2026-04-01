@@ -1,10 +1,9 @@
-import { Leaf, Mail, Phone, MapPin, Instagram, Facebook, Twitter } from 'lucide-react';
+import { Leaf, Mail, Phone, MapPin, Instagram, Facebook } from 'lucide-react';
 
 export const Footer = () => {
   const socialLinks = [
     { icon: Instagram, url: 'https://www.instagram.com/ecofestdom2026/', label: 'Instagram' },
     { icon: Facebook, url: 'https://www.facebook.com/profile.php?id=61576546331624', label: 'Facebook' },
-    { icon: Twitter, url: 'https://wa.me/8492641951', label: 'WhatsApp' },
   ];
 
   const scrollToSection = (id: string) => {

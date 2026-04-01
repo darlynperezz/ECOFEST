@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, ShoppingCart, Leaf, Instagram, Facebook, Mail, Twitter } from 'lucide-react';
+import { Menu, X, ShoppingCart, Leaf, Instagram, Facebook, Mail } from 'lucide-react';
 
 interface NavbarProps {
   cartItemCount: number;
@@ -36,8 +36,7 @@ export const Navbar = ({ cartItemCount, onCartClick }: NavbarProps) => {
   const socialLinks = [
     { icon: Instagram, url: 'https://www.instagram.com/ecofestdom2026/', title: 'Instagram' },
     { icon: Facebook, url: 'https://www.facebook.com/profile.php?id=61576546331624', title: 'Facebook' },
-    { icon: Twitter, url: '#', title: 'Twitter/X' },
-    { icon: Mail, url: 'mailto:info@ecofest.com', title: 'Email' },
+    { icon: Mail, url: '#custom-orders', title: 'Pedidos personalizados', sectionId: 'custom-orders' },
   ];
 
   return (
@@ -73,18 +72,25 @@ export const Navbar = ({ cartItemCount, onCartClick }: NavbarProps) => {
             <div className="flex items-center gap-3">
               {socialLinks.map((link) => {
                 const Icon = link.icon;
+                const isExternal = link.url.startsWith('http');
                 return (
                   <a
                     key={link.title}
                     href={link.url}
                     title={link.title}
+                    onClick={(e) => {
+                      if (link.sectionId) {
+                        e.preventDefault();
+                        scrollToSection(link.sectionId);
+                      }
+                    }}
                     className={`p-2 rounded-full transition-all hover:scale-110 ${
                       scrolled
                         ? 'text-gray-600 hover:bg-green-100 hover:text-green-700'
                         : 'text-white/70 hover:text-white'
                     }`}
-                    target={link.url !== 'mailto:info@ecofest.com' ? '_blank' : undefined}
-                    rel={link.url !== 'mailto:info@ecofest.com' ? 'noopener noreferrer' : undefined}
+                    target={isExternal ? '_blank' : undefined}
+                    rel={isExternal ? 'noopener noreferrer' : undefined}
                   >
                     <Icon className="w-5 h-5" />
                   </a>
