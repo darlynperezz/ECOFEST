@@ -34,8 +34,8 @@ export const Navbar = ({ cartItemCount, onCartClick }: NavbarProps) => {
   ];
 
   const socialLinks = [
-    { icon: Instagram, url: '#', title: 'Instagram' },
-    { icon: Facebook, url: '#', title: 'Facebook' },
+    { icon: Instagram, url: 'https://www.instagram.com/ecofestdom2026/', title: 'Instagram' },
+    { icon: Facebook, url: 'https://www.facebook.com/profile.php?id=61576546331624', title: 'Facebook' },
     { icon: Twitter, url: '#', title: 'Twitter/X' },
     { icon: Mail, url: 'mailto:info@ecofest.com', title: 'Email' },
   ];
